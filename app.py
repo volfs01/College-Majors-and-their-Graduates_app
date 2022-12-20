@@ -1,5 +1,8 @@
 import streamlit as st 
 
+from app_home import run_home_app
+from app_all_age import run_all_age
+from app_grad import run_grad_app
 def main() :
     
     menu = ['home' ,'모든 연령','대학원 졸업과 대학교 졸업' , '대학교 졸업과 고등학교 졸업']
@@ -7,11 +10,11 @@ def main() :
     choice = st.sidebar.selectbox( '메뉴를 선택하시오' , menu )
     
     if choice == 'home' :
-        pass
+        run_home_app()
     if choice == '모든 연령' :
-        pass
+        run_all_age()
     if choice == '대학원 졸업과 대학교 졸업' :
-        pass
+        run_grad_app()
     if choice == '대학교 졸업과 고등학교 졸업' :
         pass
 
