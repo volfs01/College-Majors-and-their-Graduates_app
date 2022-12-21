@@ -4,6 +4,13 @@ import pandas as pd
 import plotly.express as px 
 import seaborn as sb
 import plotly.graph_objects as go
+import numpy as np
+import platform
+from matplotlib import font_manager, rc
+plt.rcParams['axes.unicode_minus'] = False
+if platform.system() == 'Linux':
+    rc('font', family='NanumGothic')
+    
 
 def run_all_age() :
     df = pd.read_csv('csv/all-ages.csv',index_col=0)
@@ -28,13 +35,22 @@ def run_all_age() :
     z = df.loc[df['Major']==select , '실업자'].values
     
     
-    df_fig = pd.DataFrame({ 'columns' :['총 졸업자', '취업자 수', '실업자'] ,'sum':[x, y, z],
+    df_fig = pd.DataFrame({ 'columns' :['총 졸업자', '취업자 수', '실업자'] ,'Sum':[x, y, z],
                              }, index = ['총 졸업자', '취업자 수', '실업자'])
     
     st.dataframe(df_fig)
     
+    fig6 = px.pie(df_fig,'columns' , 'Sum' ,title= '각 언어별 파이차트')
+    st.plotly_chart(fig6)
+    
+    fig2=plt.figure()
+    plt.bar(np.arange(3),df2.iloc[0,-4:-1])
+    plt.xticks(np.arange(3),['gg','pasd','p'])
+
+    st.pyplot(fig2)
+    
     fig = plt.figure()
-    plt.scatter(data= df_fig ,x='columns' , y='sum')
+    plt.scatter(data= df_fig ,x='columns' , y='Sum')
     plt.title('sepal Length Vs Width')
     plt.xlabel('sepal_length')
     plt.ylabel('sepal_width')
@@ -44,10 +60,10 @@ def run_all_age() :
     plt.hist(data=df_fig , x= 'columns' ,bins=10 ,rwidth=0.3 )
     st.pyplot(fig3)
     
-    fig3 = plt.figure()
-    fig = px.bar(df_fig, x="columns", y="sum", title="gg")
+    
+    fig = px.bar(df_fig, x="columns", y="Sum", title="gg")
     st.plotly_chart(fig)
-    st.pyplot(fig3)
+    
     
     df_sorted = df_fig.sort_values('Sum' , ascending= False)
     fig7 = px.bar(df_sorted , x= 'columns' ,y='Sum')
