@@ -38,14 +38,13 @@ def run_all_age() :
     df_fig = pd.DataFrame({ 'columns' :['총 졸업자', '취업자 수', '실업자'] ,'Sum':[x, y, z],
                              }, index = ['총 졸업자', '취업자 수', '실업자'])
     
-    st.dataframe(df_fig)
+    st.dataframe(df_fig) 
     
-    fig6 = px.pie(df_fig,'columns' , 'Sum' ,title= '각 언어별 파이차트')
-    st.plotly_chart(fig6)
+
     
     fig2=plt.figure()
     plt.bar(np.arange(3),df2.iloc[0,-4:-1])
-    plt.xticks(np.arange(3),['gg','pasd','p'])
+    plt.xticks(np.arange(3),['Total','Employed','Unemployed'])
 
     st.pyplot(fig2)
     
@@ -56,18 +55,10 @@ def run_all_age() :
     plt.ylabel('sepal_width')
     st.pyplot(fig)
     
-    fig3 = plt.figure()
-    plt.hist(data=df_fig , x= 'columns' ,bins=10 ,rwidth=0.3 )
-    st.pyplot(fig3)
     
     
-    fig = px.bar(df_fig, x="columns", y="Sum", title="gg")
-    st.plotly_chart(fig)
     
-    
-    df_sorted = df_fig.sort_values('Sum' , ascending= False)
-    fig7 = px.bar(df_sorted , x= 'columns' ,y='Sum')
-    st.plotly_chart(fig7)
+
     
     
     st.text('Major는 학과 입니다.')
@@ -89,7 +80,7 @@ def run_all_age() :
     st.success('전체 중 취업율 1위부터 10위까지 보여드리겠습니다.')
     st.dataframe(df.sort_values('취업율', ascending=False).head(10))
     
-    st.dataframe(df)
+    
     
     st.text('가장 높은 학과는 COMPUTER AND INFORMATION SYSTEMS입니다.')
     
