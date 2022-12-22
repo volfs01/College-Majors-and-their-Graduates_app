@@ -5,12 +5,19 @@ import plotly.express as px
 import seaborn as sb
 import plotly.graph_objects as go
 import numpy as np
+
+# 이코드는 ec2한글 폰트가 설치되어있어야하고
+# 파이썬에서 한글이 가능하도록 먼저 셋팅해야한다
+# https://luvris2.tistory.com/119#1.4.%20matplotlib%EC%97%90%20%ED%95%9C%EA%B8%80%20%ED%8F%B0%ED%8A%B8%20%ED%99%95%EC%9D%B8
 import platform
 from matplotlib import font_manager, rc
 plt.rcParams['axes.unicode_minus'] = False
 if platform.system() == 'Linux':
     rc('font', family='NanumGothic')
     
+from sklearn.decomposition import PCA
+from sklearn.datasets import load_boston
+import webbrowser
 
 def run_all_age() :
     df = pd.read_csv('csv/all-ages.csv',index_col=0)
@@ -30,15 +37,7 @@ def run_all_age() :
     df2 = df.loc[df['Major']==select , :]
     st.dataframe(df2)
         
-    x = df.loc[df['Major']==select , '총 졸업자'].values
-    y = df.loc[df['Major']==select , '취업자 수'].values
-    z = df.loc[df['Major']==select , '실업자'].values
-    
-    
-    df_fig = pd.DataFrame({ 'columns' :['총 졸업자', '취업자 수', '실업자'] ,'Sum':[x, y, z],
-                             }, index = ['총 졸업자', '취업자 수', '실업자'])
-    
-    st.dataframe(df_fig) 
+ 
     
 
     
@@ -48,12 +47,7 @@ def run_all_age() :
 
     st.pyplot(fig2)
     
-    fig = plt.figure()
-    plt.scatter(data= df_fig ,x='columns' , y='Sum')
-    plt.title('sepal Length Vs Width')
-    plt.xlabel('sepal_length')
-    plt.ylabel('sepal_width')
-    st.pyplot(fig)
+
     
     
     
@@ -84,4 +78,18 @@ def run_all_age() :
     
     st.text('가장 높은 학과는 COMPUTER AND INFORMATION SYSTEMS입니다.')
     
+
+
+    X = df[['취업자 수','실업자']]
+
+    pca = PCA(n_components=2)
+    components = pca.fit_transform(X)
+
+    fig3 = px.scatter(components, x=0, y=1, color=df['학과 카테고리'])
+    st.plotly_chart(fig3)
+    
+    st.text('pca기법으로 실업자수와 취업자수를 분석해서 나타냈습니다.')
+    st.text('설명이 필요하다면 아래 페이지를 들어가 주세요')
+    if st.button('pca설명') :
+        webbrowser.open('http://matrix.skku.ac.kr/math4ai-intro/W12/')
     
