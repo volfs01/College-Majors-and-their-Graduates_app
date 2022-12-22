@@ -35,7 +35,7 @@ def run_grad_app() :
     column = st.radio('원하시는 컬럼을 선택하세요' , df.columns[2 : ])
     
  
-    st.text('d')
+    st.text('Grad_total = 총 대학원 졸업생 수\nGrad_employed = 대학원 졸업 취업자 수 \nGrad_unemployed = 대학원 졸업 실업자 수 \nNongrad_total = 총 대학교 졸업자 수 \nNongrad_employed = 대학교 졸업 취업자 수 \nNongrad_unemployed = 대학교 졸업 실업자 수 \nGrad_share = 대학원 졸업자 비율 \nGrad_premium = 둘의 급여 차이')
  
     
     fig = px.bar(df, y=column, x='Major', text=column)

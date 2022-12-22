@@ -9,7 +9,11 @@ import platform
 
 from sklearn.svm import SVR
 
+
 def run_high_app() :
+    
+	
+
     
    
     df = pd.read_csv('csv/recent-grads.csv')
@@ -42,7 +46,8 @@ def run_high_app() :
     df2 = df.loc[df['man_ratio'] + df['Woman_ratio'] == 100, ['Major','man_ratio','Woman_ratio','Major_category']]
     
     st.subheader('학과 인기 순위, 남여 비율, 취업 비율을 보여드리겠습니다.')
-    
+
+    st.success('Done!')
     
     choice = st.selectbox('학과의 카테고리를 선택해주세요' , df['Major_category'].unique())
     
@@ -50,6 +55,8 @@ def run_high_app() :
     select = st.selectbox('학과를 선택해주세요' ,df.loc[df['Major_category'] == choice, :]['Major'] )
     st.info('{}과를 선택하셨습니다.'.format(select))
     st.dataframe(df.loc[df['Major'] == select , :])
+    
+    st.text('full_time = 정규직 \npart_time = 알바 \nunemployed = 실업자 \ncollege_jobs = 전공 직장\nlow_jobs = 저임금 직장\n뒤에 rate,ratio가 붙으면 비율을 뜻한다. ')
     
     st.subheader('인기 순위')
     
